@@ -1,0 +1,8 @@
+---
+- name: Test Connection
+  hosts: ec2
+  become: yes
+
+  tasks:
+    - name: Ping server
+      ping:
