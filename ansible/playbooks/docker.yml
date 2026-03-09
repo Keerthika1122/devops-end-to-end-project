@@ -1,9 +1,13 @@
 ---
-- name: Install Docker
+- name: Install and configure Docker on EC2
   hosts: ec2
   become: yes
-
   tasks:
+    - name: Update all packages
+      yum:
+        name: "*"
+        state: latest
+
     - name: Install Docker
       yum:
         name: docker
@@ -14,3 +18,9 @@
         name: docker
         state: started
         enabled: yes
+
+    - name: Add ec2-user to docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes

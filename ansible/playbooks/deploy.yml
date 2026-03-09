@@ -1,0 +1,16 @@
+---
+- name: Deploy Application Container
+  hosts: ec2
+  become: yes
+  tasks:
+
+    - name: Stop existing container (ignore if not running)
+      command: docker stop devops-app
+      ignore_errors: yes
+
+    - name: Remove existing container
+      command: docker rm devops-app
+      ignore_errors: yes
+
+    - name: Run application container
+      command: docker run -d -p 80:80 --name devops-app nginx:latest
